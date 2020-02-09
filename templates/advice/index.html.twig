@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fiches pratiques{% endblock %}
+
+{% block body %}
+
+<style>
+
+    h1{
+        letter-spacing: 8px;
+    }
+
+    h2{
+        font-size:26px;
+        margin-bottom:30px;
+
+    }
+
+    .filet{
+        margin : 50px auto 100px auto;
+        width:80px;
+        height:15px;
+        background:#18BC9C;
+    }
+    .article{
+        display:flex;
+    }
+
+    .article_content{
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+    }
+    .parution{
+        color:#B4B4B4;
+    }
+    .create_your_recipe{
+        width:100%;
+        height: 350px;
+        background-image: url('{{ asset('img/477642-PGDMKI-117.jpg') }}');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .create_your_recipe h2{
+        letter-spacing: 4px;
+        font-size:40px;
+        text-align:right;
+        color:white;
+    }
+    .create_your_recipe .filet_h2{
+        width:80px;
+        height:15px;
+        background:#18BC9C;
+
+    }
+    .article_menu{
+        width:100%;
+        margin-bottom:30px;
+    }
+
+
+    .create_your_recipe .container{
+        height:350px;
+    }
+
+
+</style>
+
+
+        <h1 class="text-center mt-5">FICHES PRATIQUES</h1>
+        <div class="filet "></div>
+        <div class="container">
+            <div class="dropdown article_menu">
+                <button class="btn btn-primary dropdown-toggle article_menu" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Catégories
+                </button>
+                <div class="dropdown-menu article_menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="/fiches_pratiques">Toutes</a>
+                {% for cat in menu_categories %}
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{path('advice_category',{'id': cat.id})}}">{{ cat.name }}</a>
+                {% endfor %}
+                </div>
+            </div>
+                {% for advice in advices %}
+                    <div class="row">
+                        <div class="article col-12 mt-3 mb-3">
+                            <div class="article_img col-5 p-0">
+                                <img class="col  p-0" src="{{ advice.image }}" alt="" srcset=""></td>
+                            </div>
+                            <div class="article_content ml-3 col-7">
+                                <h2>{{ advice.title }}</h2>
+                                <p class="parution"> mis en ligne le : {{ advice.createdAt | date('d-m-Y') }} </p>
+                                <p>
+                                    {{ advice.content | slice(0, 600) }} <a href="{{ path('advice_show', {'id': advice.id})}}">...lire la suite</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <p colspan="5">aucune fiche enregistrée</p>
+                {% endfor %}      
+    </div>
+    <div class="create_your_recipe  mt-5">
+        <div class="container d-flex align-items-end flex-column justify-content-center">
+            <h2 class="text-uppercase  "> Partage tes trucs !</h2>
+            <div class="filet_h2 "></div>
+            <a type="button" class="btn btn-light mt-5" href="{{ path('advice_new') }}">Créer votre fiche pratique</a>
+        </div>
+    </div>
+
+           
+
+
+{% endblock %}

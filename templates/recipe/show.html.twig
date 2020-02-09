@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recipe{% endblock %}
+
+{% block body %}
+
+<style>
+    .filet{
+        margin : 50px auto 0 auto;
+        width:80px;
+        height:15px;
+        background:#18BC9C;
+    }
+
+    h1{
+        letter-spacing: 8px;
+        text-transform: uppercase;
+        color:white;
+    }
+    .title{
+        position:absolute;
+    }
+    .img_top{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        width:100%;
+        height:350px;
+        object-fit: cover;
+        overflow:hidden;
+        position:relative;
+        margin-bottom: 100px;
+    }
+    .img_top img{
+        width:100%;
+        position:absolute;
+    }
+    .filter{
+        width:100%;
+        height:100%;
+        background:black;
+        opacity: .50;
+        position:absolute;
+    }
+    .recipe_ingredients h2{
+        margin-bottom:20px
+    }
+    .level{
+        padding:7px;
+        width:120px;
+        text-align:center;
+        background:#FFAA00;
+        font-weight:bold;
+        font-size:14px;
+        color:white;
+        border-radius: 5px;
+    }
+
+    .new_comment{
+        width:100%;
+        height: 350px;
+        background-image: url('{{ asset('img/479314-PGEA67-545.jpg') }}');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .new_comment h2{
+        letter-spacing: 4px;
+    }
+    .new_comment .filet_h2{
+        width:80px;
+        height:15px;
+        background:#18BC9C;
+        margin-top:25px;
+    }
+
+   .new_comment .container{
+        height:350px;
+    }
+    .comments .filet{
+        margin-left:0;
+    }
+ 
+</style>
+
+
+    <div class="img_top">
+        <img src="{{ recipe.imgTop }}" alt="">
+        <div class="filter"></div>
+        <div class="title">
+            <h1 class="text-center mb-5">{{ recipe.title }}</h1>
+            <div class="filet "></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <a type="button" class="btn btn-primary mb-3" href="{{ path('recipe_index') }}">Retourner aux recettes</a>
+            <div class="row">
+                <div class="recipe_img col-6 m-0">
+                        <img class="col p-0" src="{{ recipe.image }}" alt="" srcset="">
+                </div>
+                <div class="recipe_info col-6 pl-4">
+                    <div class="level mb-3">Difficulté :
+                    {{ recipe.note }} / 5 
+                    </div>    
+                    <div class="recipe_ingredients mt-4">
+                    <h2>Ingrédients</h2>
+                    <p>{{ recipe.ingredient }}</p>
+                    </div>
+                
+                </div>
+                <div class="recipe_description mt-5  p-3">
+                    <h2>Recette</h2>
+                    <hr>
+                    <p class="mt-4">{{ recipe.content }}</p>
+                </div>
+                
+            
+            </div>
+            
+        <div class="action d-flex">
+            <a type="button" class="btn btn-secondary mt-3 mb-3 mr-3" href="{{ path('recipe_edit', {'id': recipe.id}) }}">Modifier la recette</a>
+            {{ include('recipe/_delete_form.html.twig') }} 
+        </div>
+
+    <div class="comments mt-5">
+        <h2>Commentaires</h2>
+        <div class="filet "></div>
+
+    </div>
+
+    </div>
+    <div class="new_comment mt-5">
+        <div class="container d-flex align-items-end flex-column justify-content-center">
+            <h2 class="text-uppercase  "> Échange avec nous !</h2>
+            <div class="filet_h2 "></div>
+            <a type="button" class="btn btn-primary mt-5" href="{{ path('comment_new') }}">Écrire un commentaire</a>
+        </div>
+
+    </div>
+    
+
+
+{% endblock %}

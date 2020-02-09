@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RECETTES{% endblock %}
+
+{% block body %}
+
+<style>
+    h1{
+        letter-spacing: 8px;
+        text-transform: uppercase;
+    }
+
+    .filet{
+        margin : 50px auto 100px auto;
+        width:80px;
+        height:15px;
+        background:#18BC9C;
+
+    }
+
+    .recipe_cards{
+        display:flex;
+        flex-wrap:wrap;
+    }
+
+    .recipe_cards h2{
+        font-size:24px;
+        font-weight:bold;
+        color:#2C3E50;
+    }
+
+    .recipe_content_photo{
+        width:100%;
+        height: 275px;
+        overflow:hidden;
+        margin-bottom:30px;
+        object-fit:cover;
+        
+    }
+    .recipe_cards img{
+        height:auto;
+    }
+    .recipes_content{
+        margin-bottom:75px;
+    }
+    .create_your_recipe{
+        width:100%;
+        height: 350px;
+        background-image: url('{{ asset('img/654621-PP2GN9-768.jpg') }}');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .create_your_recipe h2{
+        letter-spacing: 4px;
+    }
+    .create_your_recipe .filet_h2{
+        width:80px;
+        height:15px;
+        background:#18BC9C;
+        margin-top:25px;
+    }
+
+    .level{
+        padding:7px;
+        width:120px;
+        text-align:center;
+        background:#FFAA00;
+        font-weight:bold;
+        font-size:14px;
+        color:white;
+        border-radius: 5px;
+    }
+   .create_your_recipe .container{
+        height:350px;
+    }
+
+</style>
+<div class="container">
+    <h1 class="text-center mt-5">RECETTES</h1>
+       <div class="filet "></div>
+            <tbody>
+                <div class="recipe_cards">
+                    <div class="row">
+                        {% for recipe in recipes %}
+                            <div class="col-4 recipes_content">
+                                <tr>
+                                    {# <td>{{ recipe.id }}</td> #}
+                                    <td> 
+                                        <div class="level mb-3">Difficulté :
+                                        {{ recipe.note }} / 5 </div> </td>
+                                  
+                                    <td>
+                                    <td> <h2>{{ recipe.title }}</h2></td>
+                                        <div class="recipe_content_photo">
+                                            <img class="col-12 mt-3 mb-3 p-0" src="{{ recipe.image }}" alt="" srcset=""></td>
+                                        </div>
+                                    {# <td>{{ recipe.createdAt ? recipe.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                    <td>{{ recipe.updatedAt ? recipe.updatedAt|date('Y-m-d H:i:s') : '' }}</td> #}
+                                    <td>
+                                        <a type="button" class="btn btn-success" href="{{ path('recipe_show', {'id': recipe.id}) }}">Voir la recette</a>
+                                        <a type="button" class="btn btn-secondary" href="{{ path('recipe_edit', {'id': recipe.id}) }}">Modifier la recette</a>
+                                    </td>
+                                </tr>
+                            </div>
+                        {% else %}
+                            <tr>
+                                <td colspan="8">Aucune recette enregistrée</td>
+                            </tr>
+                        {% endfor %}
+                    </div>
+                </div>
+            </tbody>
+</div>
+<div class="create_your_recipe mt-5">
+    <div class="container d-flex align-items-end flex-column justify-content-center">
+        <h2 class="text-uppercase  "> Balance ta recette !</h2>
+        <div class="filet_h2 "></div>
+        <a type="button" class="btn btn-primary mt-5" href="{{ path('recipe_new') }}">Créer votre recette</a>
+    </div>
+</div>
+
+    
+{% endblock %}

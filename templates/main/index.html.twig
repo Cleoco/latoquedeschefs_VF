@@ -1,0 +1,276 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+    <style>
+    h1, .bandeau_category h2{
+        letter-spacing: 8px;
+        text-transform: uppercase;
+        font-size:2.5rem;
+    }
+
+    .filet{
+        margin : 50px auto 100px auto;
+        width:80px;
+        height:15px;
+        background:#18BC9C;
+
+    }
+
+    .frame{
+        position:relative;
+        height:770px;
+    }
+   .bandeau_category .filet{
+        margin : 50px auto 50px auto;
+        width:80px;
+        height:15px;
+        background:#18BC9C;
+
+    }
+    .home_frame{
+        background-image: url('{{ asset('img/cropped-img_2764.jpg') }}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100%;
+    }
+
+    .filter_frame{
+        position:absolute;
+        height:100%;
+        width:100%;
+        background:black;
+        opacity:0.50;
+    }
+    
+    .home_frame img{
+        height:100%
+    }
+
+    .baseline{
+        width:100%;
+        height:100%;
+        position:absolute;
+        font-size:50px;
+        font-style:italic;
+        color:white;
+        text-align:center;
+    }
+    .baseline p{
+        margin-top:50px;
+        font-size:18px;
+        font-style:normal;
+        color:white;
+    }
+    .icon_scroll{
+        position:absolute;
+        width:100%;
+        height:100%;
+    }
+    .icon_scroll .fa{
+        color:#18BC9C;
+        font-size:30px;
+        margin-bottom:30px;
+    }
+    .icon_scroll p{
+        color:white;
+        font-style:italic;
+    }
+
+
+    .recipe_cards{
+        display:flex;
+        flex-wrap:wrap;
+    }
+
+    .recipe_cards h2{
+        font-size:24px;
+        font-weight:bold;
+        color:#2C3E50;
+    }
+
+    .recipe_content_photo{
+        width:100%;
+        height: 275px;
+        overflow:hidden;
+        margin-bottom:30px;
+        object-fit:cover;
+        
+    }
+    .recipe_cards img{
+        height:auto;
+    }
+    .recipes_content{
+        margin-bottom:75px;
+    }
+    .level{
+        padding:7px;
+        width:120px;
+        text-align:center;
+        background:#FFAA00;
+        font-weight:bold;
+        font-size:14px;
+        color:white;
+        border-radius: 5px;
+    }
+    .home_une .filet{
+        margin-bottom:100px;
+    }
+    .btn_all_recipes{
+        margin-right:auto;
+        margin-left:auto;
+    }
+    .bandeau_category{
+        margin-top:75px;
+        padding:75px 0;
+        width:100%;
+     
+        background:#eee;
+    }
+    .category img{
+        width:100%;
+    }
+    .category{
+        overflow:hidden;
+        padding:0;
+        height:275px;
+        position:relative;
+        margin:0;
+    }
+    .filter_cat{
+        height:100%;
+        width:100%;
+        background:black;
+        opacity:0.6;
+        position:absolute;
+        left:0;
+        top:0;
+    }
+
+    .cat_title{
+        position:absolute;
+        color:white;
+        text-transform:uppercase;
+        letter-spacing:2px;
+        font-size:20px;
+        text-align:center;
+    }
+    .cat_name{
+        width:100%;
+        height:275px;
+        position:absolute;
+    }
+
+    .icon_scroll a{
+        cursor: pointer;
+        
+    }
+
+    .create_your_recipe{
+        width:100%;
+        height: 350px;
+        background-image: url('{{ asset('img/2673837.jpg') }}');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .create_your_recipe h2{
+        letter-spacing: 4px;
+    }
+    .create_your_recipe .filet_h2{
+        width:80px;
+        height:15px;
+        background:#18BC9C;
+        margin-top:25px;
+    }
+     .create_your_recipe .container{
+        height:350px;
+    }
+    .connexion{
+        color:white;
+        text-align:right;
+        line-height:60px
+
+    }
+
+    </style>
+
+    
+    <div class="frame">
+        <div class="filter_frame"></div>
+        <div class="baseline d-flex justify-content-center align-items-center flex-column">
+            <div> La gourmandise n'est pas un péché, <br> plutôt une qualité…</div>
+            <div class="filet "></div>
+            <p>Viens partager avec nous tes recettes préférées <br> et tes astuces dans ce blog collaboratif !</p>
+        </div>
+        <div class="icon_scroll d-flex justify-content-end align-items-center flex-column">
+            <p>scroll</p>
+            <a href="#scroll"><i class="fa fa-long-arrow-down" aria-hidden="true"></i></a>
+        </div>
+        <div class="home_frame"></div>
+    </div>
+    <div class="container home_une">
+        <h1 id="scroll" class="text-center mt-5">Recette à la une</h1>
+        <div class="filet "></div>
+            <tbody>
+                <div class="recipe_cards">
+                    <div class="row">
+                        {% for recipe in recipes %}
+                            <div class="col-4 recipes_content">
+                                {# <td>{{ recipe.id }}</td> #}
+                                <div class="level mb-3">Difficulté :
+                                {{ recipe.note }} / 5 </div> 
+                                <h2>{{ recipe.title }}</h2>
+                                <div class="recipe_content_photo">
+                                    <img class="col-12 mt-3 mb-3 p-0" src="{{ recipe.image }}" alt="" srcset="">
+                                </div>
+                                {# <td>{{ recipe.createdAt ? recipe.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                <td>{{ recipe.updatedAt ? recipe.updatedAt|date('Y-m-d H:i:s') : '' }}</td> #}
+                                <a type="button" class="btn btn-success" href="{{ path('recipe_show', {'id': recipe.id}) }}">Voir la recette</a>
+                                <a type="button" class="btn btn-secondary" href="{{ path('recipe_edit', {'id': recipe.id}) }}">Modifier la recette</a>
+                            </div>
+                        {% else %}
+                            <tr>
+                                <td colspan="8">Aucune recette enregistrée</td>
+                            </tr>
+                        {% endfor %}
+                    <a type="button" class="btn btn-primary btn_all_recipes" href="{{ path('recipe_index') }}">Voir toutes les recettes</a>
+                    </div>
+                </div>
+            </tbody>
+    </div>
+
+    <div class="bandeau_category">
+        <h2 class="text-center">Catégories</h2>
+        <div class="filet"></div>
+
+        <div class="categories_btn">
+            <div class="recipe_cards container">
+                    <div class="row">
+                        {% for cat in menu_categories %}
+                            <figure class="category col-4">
+                                <div class="filter_cat"></div>
+                                <div class="recipes_content d-flex flex-wrap">
+                                <div class="cat_name d-flex justify-content-center align-items-center">
+                                    <a class="cat_title" href="{{path('recettes_category',{'id': cat.id})}}">{{ cat.name }}</a>
+                                </div>
+                                <img src="{{ cat.img }}" alt="">
+                                </div>
+                            </figure>
+                        {% endfor %}
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+   <div class="create_your_recipe bandeau_connexion">
+        <div class="container d-flex align-items-end flex-column justify-content-center">
+            <h2 class="text-uppercase connexion"> Rejoins notre équipe <br> de pâtissiers !</h2>
+            <div class="filet_h2 "></div>
+            <a type="button" class="btn btn-light mt-5" href="{{ path('recipe_new') }}">Devenez membre / Connexion</a>
+        </div>
+    </div>
+
+
+{% endblock %}

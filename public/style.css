@@ -1,0 +1,21 @@
+*{
+    scroll-behavior: smooth;
+}
+p{
+    color:rgb(151, 151, 151);
+
+}
+
+.collapse, .navbar-collapse{
+    margin-right:0;
+    display:flex;
+    justify-content:flex-end;
+}
+
+.navbar-brand img{
+    width:250px;
+    margin: 15px 
+}
+.navbar{
+    box-shadow: 0px 2px 5px grey;
+}

@@ -1,0 +1,9 @@
+<div class="container">
+    <a class=" btn btn-primary mb-4 mt-5"href="{{ path('advice_index') }}">Retourner aux fiches</a>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <div class="action d-flex">
+            <button class="btn btn-secondary mt-3 mb-3 mr-3">{{ button_label|default('Enregistrer') }}</button>
+        </div>
+    {{ form_end(form) }}
+</div>

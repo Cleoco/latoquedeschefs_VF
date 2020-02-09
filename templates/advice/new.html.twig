@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Advice{% endblock %}
+
+{% block body %}
+    <h1 class=" text-center m-5">Nouvelle fiche pratique</h1>
+
+    {{ include('advice/_form.html.twig') }}
+
+    <a type="button" class="btn btn-primary" href="{{ path('recipe_index') }}">Retourner aux fiches</a>
+{% endblock %}
