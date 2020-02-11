@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<style>
+    .connexion_good{
+        display:flex;
+        flex-direction:column;
+    }
+
+    .identity_connexion{
+        color:#18BC9C;
+    }
+
+</style>
+
+
+<div class="container">
+    <h1 class=" text-center m-5">Espace connexion</h1>
+    <div class="filet "></div>
+
+    <form method="post">
+        <input type="hidden" name="_target_path" value="{{ app.session.get('_security.main.target_path') }}" />
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        {% if app.user %}
+            <div class="mb-3 connexion_good">
+                Vous êtes déja connecté <span class="identity_connexion">{{ app.user.username }} </span>
+                <a href="{{ path('app_logout') }}"><div class="btn btn-lg btn-danger mt-4">
+                Déconnexion</div></a>
+            </div>
+        {% else %}
+
+        <h1 class="h3 mb-3 font-weight-normal">Identifiez-vous</h1>
+       
+        <label for="inputEmail">Email</label>
+        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+        <label for="inputPassword">Mot de passe</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" required>
+
+        <input type="hidden" name="_csrf_token"
+            value="{{ csrf_token('authenticate') }}"
+        >
+        
+
+        {#
+            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+            See https://symfony.com/doc/current/security/remember_me.html
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="_remember_me"> Remember me
+                </label>
+            </div>
+        #}
+
+        <button class="btn btn-lg btn-success mt-4" type="submit">
+            Enregistrer
+        </button>
+        <p class="mt-4"> Vous n'avez pas encore de compte ? <a href="{{ path('app_register') }}">Cliquez-ici !</a></p>
+        {% endif %}
+    </form>
+
+</div>
+{% endblock %}

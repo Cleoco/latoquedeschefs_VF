@@ -12,7 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends AbstractController
 {
     
-    
+    /**
+     * @Route("/category", name="category")
+     */
     public function load(): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
@@ -23,7 +25,8 @@ class CategoryController extends AbstractController
         // Boucle pour créer autant d'objets que de catégories dans la liste
         foreach($categories as $cat){
             $category = new Category();
-            $category->setName($cat);
+            $category->setName($cat)
+                    ->setImg($cat);
             $entityManager->persist($category);
             $entityManager->flush();
         }

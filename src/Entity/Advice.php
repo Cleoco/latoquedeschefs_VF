@@ -61,6 +61,9 @@ class Advice
 
     public function __construct()
     {
+        $now = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+        $this->setCreatedAt($now);
+        $this->setUpdatedAt($now);
         $this->comments = new ArrayCollection();
     }
 

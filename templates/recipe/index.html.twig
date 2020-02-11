@@ -87,7 +87,7 @@
                                     {# <td>{{ recipe.id }}</td> #}
                                     <td> 
                                         <div class="level mb-3">Difficulté :
-                                        {{ recipe.note }} / 5 </div> </td>
+                                        {{ recipe.level }} / 5 </div> </td>
                                   
                                     <td>
                                     <td> <h2>{{ recipe.title }}</h2></td>
@@ -98,7 +98,9 @@
                                     <td>{{ recipe.updatedAt ? recipe.updatedAt|date('Y-m-d H:i:s') : '' }}</td> #}
                                     <td>
                                         <a type="button" class="btn btn-success" href="{{ path('recipe_show', {'id': recipe.id}) }}">Voir la recette</a>
-                                        <a type="button" class="btn btn-secondary" href="{{ path('recipe_edit', {'id': recipe.id}) }}">Modifier la recette</a>
+                                        {% if is_granted("ROLE_ADMIN") %}
+                                            <a type="button" class="btn btn-secondary" href="{{ path('recipe_edit', {'id': recipe.id}) }}">Modifier la recette</a>
+                                        {% endif %}
                                     </td>
                                 </tr>
                             </div>
@@ -114,8 +116,13 @@
 <div class="create_your_recipe mt-5">
     <div class="container d-flex align-items-end flex-column justify-content-center">
         <h2 class="text-uppercase  "> Balance ta recette !</h2>
-        <div class="filet_h2 "></div>
-        <a type="button" class="btn btn-primary mt-5" href="{{ path('recipe_new') }}">Créer votre recette</a>
+        <div class="filet_h2 "></div>   
+        <div class="buttons_creation mt-5">
+            <a type="button" class="btn btn-primary " href="{{ path('app_login') }}">Devenez membre / Connexion</a>
+            {% if is_granted("ROLE_USER") %}  
+                <a type="button" class="btn btn-success ml-2" href="{{ path('recipe_new') }}">Créer votre recette</a>
+            {% endif %} 
+        </div>
     </div>
 </div>
 

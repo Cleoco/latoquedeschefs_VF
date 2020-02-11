@@ -72,8 +72,11 @@
                 </div>
             </div>
         <div class="action d-flex">
-            <a type="button" class="btn btn-secondary mt-3 mb-3 mr-3" href="{{ path('advice_edit', {'id': advice.id}) }}">Modifier la fiche</a>
-            {{ include('advice/_delete_form.html.twig') }}
+            {% if is_granted("ROLE_ADMIN") %}
+                <a type="button" class="btn btn-secondary mt-3 mb-3 mr-3" href="{{ path('advice_edit', {'id': advice.id}) }}">Modifier la fiche</a>
+                {{ include('advice/_delete_form.html.twig') }} 
+            {% endif %}
+           
         </div>
     </div>
 

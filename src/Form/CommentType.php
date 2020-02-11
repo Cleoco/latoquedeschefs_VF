@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -34,6 +35,9 @@ class CommentType extends AbstractType
                 'attr' => [
                     'placeholder'=> 'Ajoutez une image à votre commentaire'
                 ]
+            ])
+            ->add('createdAt', DateTimeType::class,[
+                'data' => new \DateTime('now', new \DateTimeZone('Europe/Paris')) 
             ])
         ;
     }

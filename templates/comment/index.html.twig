@@ -3,39 +3,54 @@
 {% block title %}Comment index{% endblock %}
 
 {% block body %}
-    <h1>Comment index</h1>
+<style>
+  h1{
+        letter-spacing: 8px;
+        text-transform: uppercase;
+    }
 
+    .filet{
+        margin : 50px auto 100px auto;
+        width:80px;
+        height:15px;
+        background:#18BC9C;
+
+    }
+
+
+</style>
+    <div class="container">
+    <h1 class="text-center mt-5">Commentaires</h1>
+       <div class="filet "></div>
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Author</th>
-                <th>Content</th>
+                <th>Auteur</th>
+                <th>Contenu</th>
                 <th>Image</th>
-                <th>CreatedAt</th>
+                <th>Date d'ajout</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for comment in comments %}
             <tr>
-                <td>{{ comment.id }}</td>
                 <td>{{ comment.author }}</td>
                 <td>{{ comment.content }}</td>
                 <td>{{ comment.image }}</td>
                 <td>{{ comment.createdAt ? comment.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('comment_show', {'id': comment.id}) }}">show</a>
-                    <a href="{{ path('comment_edit', {'id': comment.id}) }}">edit</a>
+                    <button class="btn btn-primary"><a style = "color:white" href="{{ path('comment_show', {'id': comment.id}) }}">Voir</a></button>
+                    <button class="btn btn-danger"><a style = "color:white"  href="{{ path('comment_delete', {'id': comment.id}) }}">Supprimer</a></button>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">pas de commentaire</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('comment_new') }}">Create new</a>
+</div>
+    {# <a href="{{ path('comment_new') }}">Create new</a> #}
 {% endblock %}

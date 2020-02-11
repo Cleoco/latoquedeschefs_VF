@@ -219,7 +219,7 @@
                             <div class="col-4 recipes_content">
                                 {# <td>{{ recipe.id }}</td> #}
                                 <div class="level mb-3">Difficulté :
-                                {{ recipe.note }} / 5 </div> 
+                                {{ recipe.level }} / 5 </div> 
                                 <h2>{{ recipe.title }}</h2>
                                 <div class="recipe_content_photo">
                                     <img class="col-12 mt-3 mb-3 p-0" src="{{ recipe.image }}" alt="" srcset="">
@@ -227,7 +227,9 @@
                                 {# <td>{{ recipe.createdAt ? recipe.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                                 <td>{{ recipe.updatedAt ? recipe.updatedAt|date('Y-m-d H:i:s') : '' }}</td> #}
                                 <a type="button" class="btn btn-success" href="{{ path('recipe_show', {'id': recipe.id}) }}">Voir la recette</a>
-                                <a type="button" class="btn btn-secondary" href="{{ path('recipe_edit', {'id': recipe.id}) }}">Modifier la recette</a>
+                                {% if is_granted("ROLE_ADMIN") %}
+                                    <a type="button" class="btn btn-secondary" href="{{ path('recipe_edit', {'id': recipe.id}) }}">Modifier la recette</a>
+                                {% endif %}
                             </div>
                         {% else %}
                             <tr>
@@ -268,7 +270,7 @@
         <div class="container d-flex align-items-end flex-column justify-content-center">
             <h2 class="text-uppercase connexion"> Rejoins notre équipe <br> de pâtissiers !</h2>
             <div class="filet_h2 "></div>
-            <a type="button" class="btn btn-light mt-5" href="{{ path('recipe_new') }}">Devenez membre / Connexion</a>
+            <a type="button" class="btn btn-light mt-5" href="{{ path('app_login') }}">Devenez membre / Connexion</a>
         </div>
     </div>
 

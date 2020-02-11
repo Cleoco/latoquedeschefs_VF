@@ -42,23 +42,23 @@ class RecipeType extends AbstractType
                     'placeholder'=> 'Ajoutez le détail ici…',
                 ]
             ])
-            ->add('note', TextType::class, [
+            ->add('level', TextType::class, [
                 'label'=> 'Difficulté / 5',
-                'required'=> false,
+                'required'=> true,
                 'attr' => [
                     'placeholder'=> 'Notez la recette sur 5'
                 ]
             ])
             ->add('image', TextType::class, [
                 'label'=> 'Image de la recette',
-                'required'=> false,
+                'required'=> true,
                 'attr' => [
                     'placeholder'=> 'Ajoutez une image à votre recette'
                 ]
             ])
             ->add('imgTop', TextType::class, [
                 'label'=> 'Image de couverture',
-                'required'=> false,
+                'required'=> true,
                 'attr' => [
                     'placeholder'=> 'Ajoutez une image à la une !'
                 ]

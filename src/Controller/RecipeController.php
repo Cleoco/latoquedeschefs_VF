@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Recipe;
+use App\Form\CommentType;
 use App\Form\RecipeType;
 use App\Repository\CategoryRepository;
 use App\Repository\RecipeRepository;
@@ -48,12 +50,14 @@ class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $data = $form->getData();
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($data);
             $entityManager->flush();
 
             return $this->redirectToRoute('recipe_index');
+               
         }
 
         return $this->render('recipe/new.html.twig', [
@@ -63,15 +67,32 @@ class RecipeController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="recipe_show", methods={"GET"})
+     /**
+     * @Route("/{id}", name="recipe_show", methods={"GET","POST"}, requirements={"id":"\d+"})
      */
-    public function show(Recipe $recipe): Response
+    public function show(Recipe $recipe, Request $request)
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $manager = $this->getDoctrine()->getManager();
+            // $now = new \DateTime('now', new DateTimeZone('Europe/Paris'));
+           
+            $comment->setRecipe($recipe);
+            $manager->persist($comment);
+            $manager->flush();
+
+            return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId()]);
+
+        }
         $menu_categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+        $comments = $this->getDoctrine()->getRepository(Comment::class)->findAll();
         return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
-            'menu_categories'=> $this->menu_categories
+            'comments' => $comments,
+            'menu_categories'=> $this->menu_categories,
+            'commentForm' => $form->createView()
         ]);
     }
 

@@ -3,20 +3,16 @@
 {% block title %}Comment{% endblock %}
 
 {% block body %}
-    <h1>Comment</h1>
+    <h1>Commentaire {{ comment.id }}</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ comment.id }}</td>
-            </tr>
-            <tr>
-                <th>Author</th>
+                <th>Auteur</th>
                 <td>{{ comment.author }}</td>
             </tr>
             <tr>
-                <th>Content</th>
+                <th>Contenu</th>
                 <td>{{ comment.content }}</td>
             </tr>
             <tr>
@@ -24,7 +20,7 @@
                 <td>{{ comment.image }}</td>
             </tr>
             <tr>
-                <th>CreatedAt</th>
+                <th>Date d'ajout</th>
                 <td>{{ comment.createdAt ? comment.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         </tbody>

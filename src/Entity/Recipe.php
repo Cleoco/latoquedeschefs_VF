@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RecipeRepository")
@@ -23,6 +24,7 @@ class Recipe
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
+    
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -39,8 +41,11 @@ class Recipe
      */
     private $ingredient;
 
-    /**
+   /**
      * @ORM\Column(type="integer")
+     * @Assert\LessThanOrEqual(
+     *     value = 5, message = "Entrez une note inférieure à 5")
+     * @Assert\PositiveOrZero
      */
     private $level;
 
@@ -71,7 +76,12 @@ class Recipe
 
     public function __construct()
     {
+        $now = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+        $this->setCreatedAt($now);
+        $this->setUpdatedAt($now);
         $this->comments = new ArrayCollection();
+    
+        
     }
 
     public function getId(): ?int

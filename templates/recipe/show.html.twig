@@ -79,6 +79,14 @@
     .comments .filet{
         margin-left:0;
     }
+    .hidden{
+        display:none;
+    }
+    .comments_content{
+        background:#eee;
+        padding:20px 40px;
+        margin:40px 0
+    }
  
 </style>
 
@@ -100,7 +108,7 @@
                 </div>
                 <div class="recipe_info col-6 pl-4">
                     <div class="level mb-3">Difficulté :
-                    {{ recipe.note }} / 5 
+                    {{ recipe.level }} / 5 
                     </div>    
                     <div class="recipe_ingredients mt-4">
                     <h2>Ingrédients</h2>
@@ -118,22 +126,51 @@
             </div>
             
         <div class="action d-flex">
+        {% if is_granted("ROLE_ADMIN") %}
             <a type="button" class="btn btn-secondary mt-3 mb-3 mr-3" href="{{ path('recipe_edit', {'id': recipe.id}) }}">Modifier la recette</a>
             {{ include('recipe/_delete_form.html.twig') }} 
+        {% endif %}
         </div>
 
     <div class="comments mt-5">
         <h2>Commentaires</h2>
-        <div class="filet "></div>
-
+        <div class="filet mb-4 "></div>
+            {% for comment in comments %}
+                <div class="comments_content">
+                    <div class="comments_info">
+                        <div class="comment_photo">
+                            <img class="col-1 mt-3 mb-3 p-0" src="" alt="" srcset="">
+                        </div>
+                        <div class="comment_text">
+                            <p>{{ comment.createdAt | date("m/d/Y", "Europe/Paris")}}</p>
+                            <h3>{{ comment.author }}</h3>
+                            <p>{{ comment.content }}</p>
+                            <img class="col-1 mt-3 mb-3 p-0" src="{{ comment.image }}" alt="" srcset="">
+                        </div>
+                        {% if is_granted("ROLE_ADMIN") %} 
+                          {{ include('comment/_delete_form.html.twig') }}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+{% if is_granted("ROLE_USER") %}                                        
+    {{ form_start(commentForm) }}
+    {{ form_row(commentForm.author, {'attr' : {'placeholder' : 'Votre nom'}}) }}
+    {{ form_row(commentForm.content, {'attr' : {'placeholder' : 'Votre commentaire'}}) }}
+    <div class="hidden">
+        {{ form_row(commentForm.image, {'attr' : {'placeholder' : 'Votre commentaire'}}) }}
+        {{ form_row(commentForm.createdAt, {'attr' : {'placeholder' : 'Votre commentaire'}}) }}
     </div>
-
+    <button type="submit" class="btn btn-success">Valider</button>
+    {{ form_end(commentForm)}}
+{% endif %}
     </div>
     <div class="new_comment mt-5">
         <div class="container d-flex align-items-end flex-column justify-content-center">
             <h2 class="text-uppercase  "> Échange avec nous !</h2>
             <div class="filet_h2 "></div>
-            <a type="button" class="btn btn-primary mt-5" href="{{ path('comment_new') }}">Écrire un commentaire</a>
+            <a type="button" class="btn btn-primary mt-5" href="{{ path('app_login') }}">Devenez membre / Connexion</a>
         </div>
 
     </div>
